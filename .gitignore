@@ -1,2 +1,10 @@
 CLAUDE.md
 data/
+
+*.ipynb_checkpoints
+__pycache__/
+.DS_Store
+.env
+.venv
+.gitignore
+.gitignore
