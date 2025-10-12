@@ -1,2 +1,5 @@
 CLAUDE.md
+.claude
+__pycache__/
 data/
+ARCHITECTURE.md

@@ -1,0 +1,12 @@
+{
+  "fp_cost_total": 22550,
+  "fn_cost_total": 20900,
+  "total_cost": 43450,
+  "false_positives": 41,
+  "false_negatives": 190,
+  "true_positives": 302,
+  "true_negatives": 284274,
+  "timestamp": "2025-10-12 22:19:08",
+  "cost_fp": 550,
+  "cost_fn": 110
+}
