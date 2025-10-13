@@ -1,0 +1,37 @@
+{
+  "logistic_regression": {
+    "precision": 0.880466472303207,
+    "recall": 0.6138211382113821,
+    "total_cost": 43450,
+    "fp": 41,
+    "fn": 190,
+    "tp": 302,
+    "tn": 284274
+  },
+  "vae_baseline": {
+    "precision": 0.9841269841269841,
+    "recall": 0.25203252032520324,
+    "pr_auc": 0.6000055165009951,
+    "total_cost": 20790,
+    "fp": 1,
+    "fn": 184,
+    "tp": 62,
+    "tn": 56862
+  },
+  "vae_best": {
+    "precision": 0.940677966101695,
+    "recall": 0.45121951219512196,
+    "pr_auc": 0.6938756007952879,
+    "total_cost": 18700,
+    "fp": 7,
+    "fn": 135,
+    "tp": 111,
+    "tn": 56856,
+    "config": {
+      "hidden_dim": 256,
+      "latent_dim": 16,
+      "beta": 0.5,
+      "learning_rate": 0.0001
+    }
+  }
+}
