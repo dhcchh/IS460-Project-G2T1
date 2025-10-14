@@ -1,0 +1,213 @@
+{
+  "results": [
+    {
+      "iterations": 200,
+      "depth": 4,
+      "learning_rate": 0.1,
+      "val_cost": 36520,
+      "threshold": 0.006411960556583232,
+      "test_cost": 42240,
+      "test_precision": 0.75177304964539,
+      "test_recall": 0.8617886178861789,
+      "test_pr_auc": 0.8654417740064853
+    },
+    {
+      "iterations": 200,
+      "depth": 4,
+      "learning_rate": 0.05,
+      "val_cost": 41800,
+      "threshold": 0.009664835779168705,
+      "test_cost": 39380,
+      "test_precision": 0.7647058823529411,
+      "test_recall": 0.8455284552845529,
+      "test_pr_auc": 0.8572709482795623
+    },
+    {
+      "iterations": 200,
+      "depth": 4,
+      "learning_rate": 0.02,
+      "val_cost": 45760,
+      "threshold": 0.00836499376679207,
+      "test_cost": 41030,
+      "test_precision": 0.7563636363636363,
+      "test_recall": 0.8455284552845529,
+      "test_pr_auc": 0.8415315639679511
+    },
+    {
+      "iterations": 200,
+      "depth": 6,
+      "learning_rate": 0.1,
+      "val_cost": 31900,
+      "threshold": 0.006977956597218493,
+      "test_cost": 35200,
+      "test_precision": 0.7873134328358209,
+      "test_recall": 0.8577235772357723,
+      "test_pr_auc": 0.8639999520809195
+    },
+    {
+      "iterations": 200,
+      "depth": 6,
+      "learning_rate": 0.05,
+      "val_cost": 37180,
+      "threshold": 0.006018039450324062,
+      "test_cost": 35090,
+      "test_precision": 0.7881040892193308,
+      "test_recall": 0.8617886178861789,
+      "test_pr_auc": 0.8679618422589523
+    },
+    {
+      "iterations": 200,
+      "depth": 6,
+      "learning_rate": 0.02,
+      "val_cost": 41140,
+      "threshold": 0.00666170861332437,
+      "test_cost": 40480,
+      "test_precision": 0.7591240875912408,
+      "test_recall": 0.8455284552845529,
+      "test_pr_auc": 0.8554405030088357
+    },
+    {
+      "iterations": 200,
+      "depth": 8,
+      "learning_rate": 0.1,
+      "val_cost": 25300,
+      "threshold": 0.00919979117142259,
+      "test_cost": 28820,
+      "test_precision": 0.8228346456692913,
+      "test_recall": 0.8495934959349594,
+      "test_pr_auc": 0.8610821669954535
+    },
+    {
+      "iterations": 200,
+      "depth": 8,
+      "learning_rate": 0.05,
+      "val_cost": 30580,
+      "threshold": 0.00708359559888126,
+      "test_cost": 36190,
+      "test_precision": 0.7822878228782287,
+      "test_recall": 0.8617886178861789,
+      "test_pr_auc": 0.8688250172308438
+    },
+    {
+      "iterations": 200,
+      "depth": 8,
+      "learning_rate": 0.02,
+      "val_cost": 39820,
+      "threshold": 0.007323658872249666,
+      "test_cost": 43120,
+      "test_precision": 0.7464285714285714,
+      "test_recall": 0.8495934959349594,
+      "test_pr_auc": 0.8598627578509798
+    },
+    {
+      "iterations": 400,
+      "depth": 4,
+      "learning_rate": 0.1,
+      "val_cost": 31900,
+      "threshold": 0.007248882074523847,
+      "test_cost": 41140,
+      "test_precision": 0.7571428571428571,
+      "test_recall": 0.8617886178861789,
+      "test_pr_auc": 0.8657202970021599
+    },
+    {
+      "iterations": 400,
+      "depth": 4,
+      "learning_rate": 0.05,
+      "val_cost": 35860,
+      "threshold": 0.007040015870073436,
+      "test_cost": 40150,
+      "test_precision": 0.7617328519855595,
+      "test_recall": 0.8577235772357723,
+      "test_pr_auc": 0.8652408672446367
+    },
+    {
+      "iterations": 400,
+      "depth": 4,
+      "learning_rate": 0.02,
+      "val_cost": 44440,
+      "threshold": 0.007884645105532122,
+      "test_cost": 41030,
+      "test_precision": 0.7563636363636363,
+      "test_recall": 0.8455284552845529,
+      "test_pr_auc": 0.8532372495283075
+    },
+    {
+      "iterations": 400,
+      "depth": 6,
+      "learning_rate": 0.1,
+      "val_cost": 22660,
+      "threshold": 0.008957933482137036,
+      "test_cost": 29810,
+      "test_precision": 0.8171206225680934,
+      "test_recall": 0.8536585365853658,
+      "test_pr_auc": 0.8612132343492563
+    },
+    {
+      "iterations": 400,
+      "depth": 6,
+      "learning_rate": 0.05,
+      "val_cost": 31900,
+      "threshold": 0.006302888219896663,
+      "test_cost": 34430,
+      "test_precision": 0.79182156133829,
+      "test_recall": 0.8658536585365854,
+      "test_pr_auc": 0.8668173070820804
+    },
+    {
+      "iterations": 400,
+      "depth": 6,
+      "learning_rate": 0.02,
+      "val_cost": 37840,
+      "threshold": 0.006198581628110688,
+      "test_cost": 39270,
+      "test_precision": 0.7655677655677655,
+      "test_recall": 0.8495934959349594,
+      "test_pr_auc": 0.868972437545671
+    },
+    {
+      "iterations": 400,
+      "depth": 8,
+      "learning_rate": 0.1,
+      "val_cost": 22000,
+      "threshold": 0.008045896819658263,
+      "test_cost": 25740,
+      "test_precision": 0.8414634146341463,
+      "test_recall": 0.8414634146341463,
+      "test_pr_auc": 0.8616486048019103
+    },
+    {
+      "iterations": 400,
+      "depth": 8,
+      "learning_rate": 0.05,
+      "val_cost": 23980,
+      "threshold": 0.008666630981693143,
+      "test_cost": 28270,
+      "test_precision": 0.8260869565217391,
+      "test_recall": 0.8495934959349594,
+      "test_pr_auc": 0.8662928868456355
+    },
+    {
+      "iterations": 400,
+      "depth": 8,
+      "learning_rate": 0.02,
+      "val_cost": 35200,
+      "threshold": 0.005701564014281257,
+      "test_cost": 42900,
+      "test_precision": 0.74822695035461,
+      "test_recall": 0.8577235772357723,
+      "test_pr_auc": 0.8678714206528267
+    }
+  ],
+  "best_by_val_cost": {
+    "iterations": 400.0,
+    "depth": 8.0,
+    "learning_rate": 0.1,
+    "val_cost": 22000.0,
+    "threshold": 0.008045896819658263,
+    "test_cost": 25740.0,
+    "test_precision": 0.8414634146341463,
+    "test_recall": 0.8414634146341463,
+    "test_pr_auc": 0.8616486048019103
+  }
+}
