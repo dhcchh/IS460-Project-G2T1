@@ -1,0 +1,25 @@
+{
+  "logistic_regression": {
+    "precision": 0.880466472303207,
+    "recall": 0.6138211382113821,
+    "total_cost": 43450,
+    "fp": 41,
+    "fn": 190,
+    "tp": 302,
+    "tn": 284274
+  },
+  "catboost_baseline": {
+    "precision": 1.0,
+    "recall": 0.7878787878787878,
+    "pr_auc": 0.8695234644472736,
+    "total_cost": 2310,
+    "fp": 0,
+    "fn": 21,
+    "tp": 78,
+    "tn": 56863
+  },
+  "cost_savings": {
+    "absolute": 41140,
+    "percentage": 94.68354430379748
+  }
+}

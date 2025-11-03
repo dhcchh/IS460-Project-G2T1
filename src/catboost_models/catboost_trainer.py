@@ -77,7 +77,7 @@ class CatBoostFraudTrainer:
         print("\n[3/6] Building CatBoost model...")
         params = {
             'loss_function': 'Logloss',
-            'eval_metric': 'AUC:pr',
+            'eval_metric': 'PRAUC',
             'learning_rate': self.config.get('learning_rate', 0.05),
             'depth': self.config.get('depth', 6),
             'l2_leaf_reg': self.config.get('l2_leaf_reg', 3.0),
@@ -101,6 +101,10 @@ class CatBoostFraudTrainer:
         """Fit model on train and track best iteration."""
         print(f"\nTraining CatBoost model...")
 
+        # Ensure labels are integer 0/1
+        y_train = np.asarray(y_train).astype(int)
+        y_val = np.asarray(y_val).astype(int)
+
         # Create data pools
         train_pool = Pool(X_train, y_train)
         eval_pool = Pool(X_val, y_val)
@@ -113,7 +117,22 @@ class CatBoostFraudTrainer:
         best_score = self.model.get_best_score()
         print(f"Training completed!")
         print(f"  Best iteration: {best_iteration}")
-        print(f"  Best validation score: {best_score:.4f}")
+        # CatBoost returns a dict with 'learn' and 'validation' metrics
+        if isinstance(best_score, dict):
+            val_scores = best_score.get('validation') or best_score.get('Validation') or {}
+            if isinstance(val_scores, dict) and len(val_scores) > 0:
+                metric_name, metric_value = next(iter(val_scores.items()))
+                try:
+                    print(f"  Best validation {metric_name}: {float(metric_value):.4f}")
+                except Exception:
+                    print(f"  Best validation {metric_name}: {metric_value}")
+            else:
+                print(f"  Best scores: {best_score}")
+        else:
+            try:
+                print(f"  Best validation score: {float(best_score):.4f}")
+            except Exception:
+                print(f"  Best validation score: {best_score}")
 
     def optimize_threshold(self, X_val, y_val):
         """Pick threshold on val to minimize cost."""
