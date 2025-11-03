@@ -1,0 +1,9 @@
+{
+  "precision": 0.7589928057553957,
+  "recall": 0.8577235772357723,
+  "pr_auc": 0.867509917661577,
+  "total_cost": 40700,
+  "false_positives": 67,
+  "false_negatives": 35,
+  "optimal_threshold": 0.005518112668845094
+}

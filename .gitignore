@@ -3,3 +3,13 @@ CLAUDE.md
 __pycache__/
 data/
 ARCHITECTURE.md
+
+*.ipynb_checkpoints
+__pycache__/
+.DS_Store
+.env
+.venv
+.gitignore
+.gitignore
+
+tree_models/
