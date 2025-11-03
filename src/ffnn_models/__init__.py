@@ -1,20 +1,26 @@
-"""CatBoost models package exports."""
+"""
+FFNN Models Package
 
-from .catboost_base import (
-    CatBoostDataHandler,
+Contains all FFNN-related classes and components for fraud detection.
+"""
+
+from .ffnn_base import (
+    FFNNDataHandler,
+    FraudDetectionFFNN,
+    FraudDataset,
     ThresholdOptimizer,
     compute_prediction_scores
 )
 
-from .catboost_trainer import CatBoostFraudTrainer
-from .catboost_tuner import CatBoostGridSearchTuner
+from .ffnn_trainer import FFNNFraudTrainer
+from .ffnn_tuner import FFNNGridSearchTuner
 
 __all__ = [
-    'CatBoostDataHandler',
+    'FFNNDataHandler',
+    'FraudDetectionFFNN',
+    'FraudDataset',
     'ThresholdOptimizer',
     'compute_prediction_scores',
-    'CatBoostFraudTrainer',
-    'CatBoostGridSearchTuner'
+    'FFNNFraudTrainer',
+    'FFNNGridSearchTuner'
 ]
-
-
