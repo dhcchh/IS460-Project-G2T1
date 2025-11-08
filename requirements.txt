@@ -1,8 +1,20 @@
+# Core scientific computing
 pandas>=1.5.3
 numpy>=1.24.2
 scikit-learn>=1.2.2
-xgboost>=1.7.5
+
+# Machine learning libraries
 catboost>=1.2
+xgboost>=1.7.5
 lightgbm>=4.1.0
+
+# Deep learning (PyTorch for VAE and FFNN)
+torch>=2.0.0
+
+# Visualization
 matplotlib>=3.7.1
 seaborn>=0.12.2
+
+# Jupyter notebook support (optional but recommended)
+jupyter>=1.0.0
+ipykernel>=6.0.0

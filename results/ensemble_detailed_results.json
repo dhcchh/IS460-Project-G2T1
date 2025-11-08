@@ -1,0 +1,53 @@
+{
+  "ensemble": {
+    "precision": 0.9927536231884058,
+    "recall": 0.8353658536585366,
+    "pr_auc": 0.9060852580974617,
+    "total_cost": 10560.0,
+    "false_positives": 3,
+    "false_negatives": 81,
+    "optimal_threshold": 0.44000000000000006,
+    "savings": 43560.0,
+    "savings_percentage": 80.48780487804879
+  },
+  "catboost": {
+    "precision": 0.9951100244498777,
+    "recall": 0.8272357723577236,
+    "pr_auc": 0.9050899318337218,
+    "total_cost": 10450.0,
+    "false_positives": 2,
+    "false_negatives": 85,
+    "weight_in_ensemble": 0.7660098463557168
+  },
+  "vae": {
+    "precision": 0.9585062240663901,
+    "recall": 0.4695121951219512,
+    "pr_auc": 0.6497200878263003,
+    "total_cost": 34210.0,
+    "false_positives": 10,
+    "false_negatives": 261,
+    "weight_in_ensemble": 0.23399015364428324
+  },
+  "baseline": {
+    "total_cost": 54120.0
+  },
+  "config": {
+    "data_path": "../../data/processed/creditcard_fe.csv",
+    "catboost_model_path": "../../models/catboost_best_tuned.cbm",
+    "vae_model_path": "../../models/vae_best_tuned.pth",
+    "logreg_model_path": "../../models/logreg_baseline.pkl",
+    "device": "cuda",
+    "C_FP": 550,
+    "C_FN": 110
+  },
+  "logistic_regression": {
+    "precision": 0.8857142857142857,
+    "recall": 0.6300813008130082,
+    "pr_auc": 0.7568380323835109,
+    "total_cost": 42020.0,
+    "false_positives": 40,
+    "false_negatives": 182,
+    "in_ensemble": false,
+    "note": "Comparison only - not included in ensemble"
+  }
+}
