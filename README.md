@@ -218,35 +218,45 @@ Input(22) → FC(64) → ReLU → Dropout(0.2)
 | Model | Training Paradigm | Fraud in Training | Test Set Fraud | Test Cost |
 |-------|------------------|-------------------|----------------|-----------|
 | CatBoost | Supervised | 295 cases (learned patterns) | 99 cases (20%) | $2,310 |
+| FFNN | Supervised | 295 cases (learned patterns) | 99 cases (20%) | $5,720 |
 | VAE | Unsupervised | 0 cases (anomaly only) | 246 cases (50%) | $18,700 |
 
 **Problem**: Direct cost comparison is unfair because:
-1. CatBoost learned from 295 fraud examples
+1. CatBoost & FFNN learned from 295 fraud examples
 2. VAE never saw any fraud (pure anomaly detection)
-3. VAE tested on 2.5× more fraud cases than CatBoost
+3. VAE tested on 2.5× more fraud cases than supervised models
 4. Supervised models naturally have lower cost when evaluated on data similar to training
 
 ### Solution: Normalized Cost Per Fraud Case
 
-**Implementation** (`src/ensemble.py:277-341`):
+**Implementation** (`src/ensemble.py:346-420`):
 
 ```python
 # Normalize by number of fraud cases in evaluation
 cost_per_fraud_catboost = catboost_cost / n_fraud_cases  # $10,450 / 492 = $21.24
-cost_per_fraud_vae = vae_cost / n_fraud_cases            # $34,760 / 492 = $70.65
+cost_per_fraud_ffnn = ffnn_cost / n_fraud_cases          # $20,350 / 492 = $41.36
+cost_per_fraud_vae = vae_cost / n_fraud_cases            # $34,650 / 492 = $70.43
 
 # Inverse cost weighting (lower cost per fraud = higher weight)
-weight_catboost = (1 / cost_per_fraud_catboost) / total_inverse
-weight_vae = (1 / cost_per_fraud_vae) / total_inverse
+epsilon = 1e-6
+inverse_catboost = 1.0 / (cost_per_fraud_catboost + epsilon)
+inverse_ffnn = 1.0 / (cost_per_fraud_ffnn + epsilon)
+inverse_vae = 1.0 / (cost_per_fraud_vae + epsilon)
+
+total_inverse = inverse_catboost + inverse_ffnn + inverse_vae
+weight_catboost = inverse_catboost / total_inverse
+weight_ffnn = inverse_ffnn / total_inverse
+weight_vae = inverse_vae / total_inverse
 ```
 
 **Benefits**:
 1. **Fair comparison** regardless of training paradigm
-2. **Accounts for dataset size** (both evaluated on 492 fraud cases)
+2. **Accounts for dataset size** (all evaluated on 492 fraud cases)
 3. **Respects model strengths**:
    - CatBoost excels at known fraud patterns
+   - FFNN provides deep learning representation
    - VAE excels at novel/unknown patterns
-4. **Normalized metric** allows fair weighting
+4. **Normalized metric** allows fair weighting across all models
 
 ### Ensemble Pipeline
 
@@ -254,17 +264,19 @@ weight_vae = (1 / cost_per_fraud_vae) / total_inverse
 ```python
 # Each model uses its OWN scaler
 X_catboost = catboost_scaler.transform(X_raw)  # Fitted on all data
+X_ffnn = ffnn_scaler.transform(X_raw)          # Fitted on all data
 X_vae = vae_scaler.transform(X_raw)            # Fitted on normal only
 ```
 
 **Prediction Combination**:
 1. Get CatBoost probabilities (0-1 scale)
-2. Get VAE reconstruction errors (normalized to 0-1)
-3. Weighted sum: `ensemble_score = w_cb × p_cb + w_vae × e_vae`
-4. Optimize final threshold on full dataset
+2. Get FFNN probabilities (0-1 scale)
+3. Get VAE reconstruction errors (normalized to 0-1)
+4. Weighted sum: `ensemble_score = w_cb × p_cb + w_ffnn × p_ffnn + w_vae × e_vae`
+5. Optimize final threshold on full dataset
 
 **Evaluation**:
-- All models (CatBoost, VAE, LogReg, Ensemble) evaluated on **SAME** 284,807 samples
+- All models (LogReg, CatBoost, VAE, FFNN, Ensemble) evaluated on **SAME** 284,807 samples
 - Fair comparison guaranteed by:
   - Same 492 fraud cases
   - Same 22 features
@@ -288,6 +300,8 @@ IS460-Project-G2T1/
 │   ├── catboost_best_tuned.cbm
 │   ├── vae_baseline.pth
 │   ├── vae_best_tuned.pth
+│   ├── ffnn_baseline.pth
+│   ├── ffnn_best_tuned.pth
 │   └── *_metadata.pkl              # Scalers & thresholds
 │
 ├── notebooks/
@@ -306,7 +320,11 @@ IS460-Project-G2T1/
 │   │   ├── vae_baseline_training.ipynb
 │   │   └── vae_hyperparameter_tuning.ipynb
 │   │
-│   └── ensemble/                   # Fair Cost-Based Ensemble
+│   ├── ffnn/                       # FFNN (Deep Learning)
+│   │   ├── ffnn_baseline_training.ipynb
+│   │   └── ffnn_hyperparameter_tuning.ipynb
+│   │
+│   └── ensemble/                   # Fair Cost-Based Ensemble (3 models)
 │       └── ensemble_test.ipynb
 │
 ├── src/
@@ -324,11 +342,14 @@ IS460-Project-G2T1/
 │   │   ├── vae_trainer.py          # train_vae_baseline()
 │   │   └── vae_tuner.py            # Optuna hyperparameter tuning
 │   │
-│   └── ffnn_models/                # (if present)
+│   └── ffnn_models/
+│       ├── ffnn_base.py            # FraudDetectionFFNN, FFNNDataHandler
+│       ├── ffnn_trainer.py         # train_ffnn_baseline()
+│       └── ffnn_tuner.py           # Optuna hyperparameter tuning
 │
 ├── results/
 │   ├── figures/                    # Visualizations
-│   ├── ensemble_comparison.csv     # 4-model comparison
+│   ├── ensemble_comparison.csv     # 5-model comparison
 │   └── ensemble_detailed_results.json
 │
 ├── requirements.txt                # Dependencies
@@ -389,6 +410,9 @@ jupyter notebook notebooks/catboost_model_test/catboost_baseline_training.ipynb
 
 # VAE Baseline
 jupyter notebook notebooks/vae_model_test/vae_baseline_training.ipynb
+
+# FFNN Baseline
+jupyter notebook notebooks/ffnn/ffnn_baseline_training.ipynb
 ```
 
 **2. Hyperparameter Tuning**:
@@ -398,9 +422,12 @@ jupyter notebook notebooks/catboost_model_test/catboost_hyperparameter_tuning.ip
 
 # VAE Tuning
 jupyter notebook notebooks/vae_model_test/vae_hyperparameter_tuning.ipynb
+
+# FFNN Tuning
+jupyter notebook notebooks/ffnn/ffnn_hyperparameter_tuning.ipynb
 ```
 
-**3. Ensemble Comparison**:
+**3. Ensemble Comparison** (requires all three best tuned models):
 ```bash
 jupyter notebook notebooks/ensemble/ensemble_test.ipynb
 ```
@@ -421,6 +448,7 @@ python src/ensemble.py \
     --data data/processed/creditcard_fe.csv \
     --catboost models/catboost_best_tuned.cbm \
     --vae models/vae_best_tuned.pth \
+    --ffnn models/ffnn_best_tuned.pth \
     --device cuda
 ```
 
@@ -434,29 +462,33 @@ python src/ensemble.py \
 |-------|----------|-------------------|-----------|--------|--------|------|---------|
 | **LogReg** | Supervised | 394 (80%) | 0.8857 | 0.6301 | 0.7568 | $42,020 | 22.4% |
 | **CatBoost** | Supervised | 295 (60%) | 0.9951 | 0.8272 | 0.9051 | $10,450 | 80.7% |
-| **VAE** | Unsupervised | 0 (0%) | 0.9576 | 0.4593 | 0.6483 | $34,760 | 35.8% |
-| **Ensemble** | Fair Weighted | - | 0.9951 | 0.8272 | 0.9063 | $10,450 | 80.7% |
+| **VAE** | Unsupervised | 0 (0%) | 0.9547 | 0.4715 | 0.6530 | $34,650 | 36.0% |
+| **FFNN** | Supervised | 295 (60%) | 0.9852 | 0.6748 | 0.8757 | $20,350 | 62.4% |
+| **Ensemble** | Fair Weighted (3 models) | - | 0.9950 | 0.8171 | 0.9113 | $11,000 | 79.7% |
 
 **Baseline (No Detection)**: $54,120
 
 ### Key Insights
 
-1. **CatBoost Dominates**: Best individual model with 80.7% cost savings
-2. **Ensemble Matches CatBoost**: Fair weighting gives CatBoost 76.9% weight
-3. **VAE Competitive**: Despite no fraud in training, achieves 35.8% savings
-4. **LogReg Baseline**: Simple model still provides 22.4% cost reduction
+1. **CatBoost Best Individual**: Achieves lowest cost ($10,450) with 80.7% savings
+2. **Ensemble Strong Performance**: 3-model ensemble achieves $11,000 cost (79.7% savings)
+3. **FFNN Competitive**: Deep learning approach provides 62.4% savings
+4. **VAE Effective**: Despite no fraud in training, achieves 36.0% savings
+5. **LogReg Baseline**: Simple model provides 22.4% cost reduction floor
 
-### Ensemble Weights (Fair Normalized)
+### Ensemble Weights (Fair Normalized - 3 Models)
 
 ```
-CatBoost: 76.9% weight ($21.24 per fraud case)
-VAE:      23.1% weight ($70.65 per fraud case)
+CatBoost: 55.09% weight ($21.24 per fraud case)
+FFNN:     28.29% weight ($41.36 per fraud case)
+VAE:      16.62% weight ($70.43 per fraud case)
 ```
 
 The normalized weighting accounts for:
-- CatBoost's supervised learning advantage (saw 295 fraud cases)
+- CatBoost & FFNN's supervised learning advantage (saw 295 fraud cases each)
 - VAE's unsupervised disadvantage (saw 0 fraud cases)
-- Different test set sizes (CatBoost: 99 fraud, VAE: 246 fraud)
+- All models evaluated on same 492 fraud cases for fairness
+- Lower cost per fraud case → higher contribution to ensemble
 
 ---
 
@@ -486,11 +518,12 @@ The normalized weighting accounts for:
 
 ## Future Work
 
-- [ ] Add FFNN hyperparameter tuning
 - [ ] Explore temporal validation (time-based splits)
 - [ ] Test ensemble on unseen fraud patterns
 - [ ] Implement online learning for production deployment
 - [ ] Add model explainability (SHAP values)
+- [ ] Experiment with stacking/meta-learning ensembles
+- [ ] Add real-time inference optimization
 
 ---
 

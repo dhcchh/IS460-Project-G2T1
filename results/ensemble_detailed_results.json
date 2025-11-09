@@ -1,14 +1,14 @@
 {
   "ensemble": {
-    "precision": 0.9927536231884058,
-    "recall": 0.8353658536585366,
-    "pr_auc": 0.9060852580974617,
-    "total_cost": 10560.0,
-    "false_positives": 3,
-    "false_negatives": 81,
-    "optimal_threshold": 0.44000000000000006,
-    "savings": 43560.0,
-    "savings_percentage": 80.48780487804879
+    "precision": 0.995049504950495,
+    "recall": 0.8170731707317073,
+    "pr_auc": 0.9112655422430456,
+    "total_cost": 11000.0,
+    "false_positives": 2,
+    "false_negatives": 90,
+    "optimal_threshold": 0.49,
+    "savings": 43120.0,
+    "savings_percentage": 79.67479674796748
   },
   "catboost": {
     "precision": 0.9951100244498777,
@@ -17,16 +17,16 @@
     "total_cost": 10450.0,
     "false_positives": 2,
     "false_negatives": 85,
-    "weight_in_ensemble": 0.7660098463557168
+    "weight_in_ensemble": 0.5564534165164085
   },
   "vae": {
-    "precision": 0.9585062240663901,
-    "recall": 0.4695121951219512,
-    "pr_auc": 0.6497200878263003,
-    "total_cost": 34210.0,
-    "false_positives": 10,
-    "false_negatives": 261,
-    "weight_in_ensemble": 0.23399015364428324
+    "precision": 0.941908713692946,
+    "recall": 0.4613821138211382,
+    "pr_auc": 0.6291770549971927,
+    "total_cost": 36850.0,
+    "false_positives": 14,
+    "false_negatives": 265,
+    "weight_in_ensemble": 0.15780022791679343
   },
   "baseline": {
     "total_cost": 54120.0
@@ -35,6 +35,7 @@
     "data_path": "../../data/processed/creditcard_fe.csv",
     "catboost_model_path": "../../models/catboost_best_tuned.cbm",
     "vae_model_path": "../../models/vae_best_tuned.pth",
+    "ffnn_model_path": "../../models/ffnn_best_tuned.pth",
     "logreg_model_path": "../../models/logreg_baseline.pkl",
     "device": "cuda",
     "C_FP": 550,
