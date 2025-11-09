@@ -225,7 +225,11 @@ Input(22) → FC(64) → ReLU → Dropout(0.2)
 - Early stopping on validation loss
 - Same supervised approach as CatBoost
 
-**Location**: `notebooks/ffnn/` (if exists)
+**Training Pipeline** (`src/ffnn_models/`):
+- Baseline training and hyperparameter tuning combined in single notebook
+- Saved as `models/ffnn_baseline.pth` and `models/ffnn_best_tuned.pth`
+
+**Notebook**: `notebooks/ffnn_complete_pipeline.ipynb`
 
 ---
 
@@ -340,12 +344,11 @@ IS460-Project-G2T1/
 │   │   ├── vae_baseline_training.ipynb
 │   │   └── vae_hyperparameter_tuning.ipynb
 │   │
-│   ├── ffnn/                       # FFNN (Deep Learning)
-│   │   ├── ffnn_baseline_training.ipynb
-│   │   └── ffnn_hyperparameter_tuning.ipynb
+│   ├── ensemble/                   # Fair Cost-Based Ensemble (3 models)
+│   │   └── ensemble_test.ipynb
 │   │
-│   └── ensemble/                   # Fair Cost-Based Ensemble (3 models)
-│       └── ensemble_test.ipynb
+│   ├── ffnn_complete_pipeline.ipynb  # FFNN (Deep Learning) - all-in-one
+│   └── EDA_statistical_analysis.ipynb
 │
 ├── src/
 │   ├── evaluation.py               # FraudEvaluationMetrics (PR-AUC, cost)
@@ -431,8 +434,8 @@ jupyter notebook notebooks/catboost_model_test/catboost_baseline_training.ipynb
 # VAE Baseline
 jupyter notebook notebooks/vae_model_test/vae_baseline_training.ipynb
 
-# FFNN Baseline
-jupyter notebook notebooks/ffnn/ffnn_baseline_training.ipynb
+# FFNN (includes both baseline and tuning)
+jupyter notebook notebooks/ffnn_complete_pipeline.ipynb
 ```
 
 **2. Hyperparameter Tuning**:
@@ -443,8 +446,8 @@ jupyter notebook notebooks/catboost_model_test/catboost_hyperparameter_tuning.ip
 # VAE Tuning
 jupyter notebook notebooks/vae_model_test/vae_hyperparameter_tuning.ipynb
 
-# FFNN Tuning
-jupyter notebook notebooks/ffnn/ffnn_hyperparameter_tuning.ipynb
+# FFNN Tuning (included in complete pipeline above)
+# See ffnn_complete_pipeline.ipynb
 ```
 
 **3. Ensemble Comparison** (requires all three best tuned models):
