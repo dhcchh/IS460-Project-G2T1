@@ -3,19 +3,39 @@
 A comprehensive fraud detection system comparing gradient boosting (CatBoost), anomaly detection (VAE), deep learning (FFNN), and traditional ML (Logistic Regression) approaches. Includes a novel **fair cost-based ensemble** that accounts for different training paradigms (supervised vs. unsupervised).
 
 ## Table of Contents
-- [Project Overview](#project-overview)
-- [Business Objective](#business-objective)
-- [Dataset](#dataset)
-- [Model Training Approaches](#model-training-approaches)
-  - [1. Logistic Regression (Baseline)](#1-logistic-regression-baseline)
-  - [2. CatBoost (Gradient Boosting)](#2-catboost-gradient-boosting)
-  - [3. VAE (Variational Autoencoder)](#3-vae-variational-autoencoder)
-  - [4. FFNN (Feed-Forward Neural Network)](#4-ffnn-feed-forward-neural-network)
-- [Ensemble Methodology](#ensemble-methodology)
-- [Project Structure](#project-structure)
-- [Setup & Installation](#setup--installation)
-- [Usage](#usage)
-- [Results](#results)
+- [Credit Card Fraud Detection - Multi-Model Comparison \& Ensemble](#credit-card-fraud-detection---multi-model-comparison--ensemble)
+  - [Table of Contents](#table-of-contents)
+  - [Project Overview](#project-overview)
+  - [Business Objective](#business-objective)
+  - [Dataset](#dataset)
+  - [Model Training Approaches](#model-training-approaches)
+    - [1. Logistic Regression (Baseline)](#1-logistic-regression-baseline)
+    - [2. CatBoost (Gradient Boosting)](#2-catboost-gradient-boosting)
+    - [3. VAE (Variational Autoencoder)](#3-vae-variational-autoencoder)
+    - [4. FFNN (Feed-Forward Neural Network)](#4-ffnn-feed-forward-neural-network)
+  - [Ensemble Methodology](#ensemble-methodology)
+    - [The Fair Weighting Problem](#the-fair-weighting-problem)
+    - [Solution: Normalized Cost Per Fraud Case](#solution-normalized-cost-per-fraud-case)
+    - [Ensemble Pipeline](#ensemble-pipeline)
+  - [Project Structure](#project-structure)
+  - [Setup \& Installation](#setup--installation)
+    - [1. Create Data Folder](#1-create-data-folder)
+    - [2. Install Dependencies](#2-install-dependencies)
+    - [3. Feature Engineering](#3-feature-engineering)
+  - [Usage](#usage)
+    - [Training Workflow](#training-workflow)
+    - [Command Line Usage](#command-line-usage)
+  - [Results](#results)
+    - [Model Comparison (Full Dataset: 284,807 samples, 492 fraud)](#model-comparison-full-dataset-284807-samples-492-fraud)
+    - [Key Insights](#key-insights)
+    - [Ensemble Weights (Fair Normalized - 3 Models)](#ensemble-weights-fair-normalized---3-models)
+  - [Key Learnings](#key-learnings)
+    - [1. Training Paradigm Matters](#1-training-paradigm-matters)
+    - [2. Fair Comparison is Critical](#2-fair-comparison-is-critical)
+    - [3. Business Cost Optimization](#3-business-cost-optimization)
+    - [4. Feature Engineering Impact](#4-feature-engineering-impact)
+  - [Future Work](#future-work)
+  - [References](#references)
 
 ---
 
@@ -530,15 +550,3 @@ The normalized weighting accounts for:
 ## References
 
 - **Dataset**: [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
-- **CatBoost**: [Official Documentation](https://catboost.ai/)
-- **VAE**: Kingma & Welling, "Auto-Encoding Variational Bayes" (2013)
-
-## License
-
-MIT License - See LICENSE file for details
-
----
-
-## Contact
-
-For questions or contributions, please open an issue on GitHub.
